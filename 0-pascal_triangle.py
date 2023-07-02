@@ -1,27 +1,41 @@
 #!/usr/bin/python3
-'''
-    list of lists representing the pascal triangle
-'''
+""" Returns a list of lists of integers. """
+
+
+def factorial(n):
+    """ Factorial function. """
+    # Base condition to end recursion
+    if n == 0:
+        return 1
+    else:  # n is greater than 0
+        return (n * factorial(n-1))
+
+
+def comb(a, b):
+    """ Calculate combination of 2 numbers. """
+    # Floor division to get integer as classic division returns float value
+    return factorial(a) // (factorial(b) * (factorial(a - b)))
 
 
 def pascal_triangle(n):
-    '''
-        returns a list of lists
-    '''
-    pascal = []
-    if type(n) is not int or n <= 0:
-        return []
-    if n > 0 and n <= 5:
-        for i in range(n):
-            if i < 5:
-                pascal.append(list(map(int, list(str(11**i)))))
-    if n > 5:
-        for i in range(n):
-            attach = []
-            for j in range(i + 1):
-                if j == 0 or j == i:
-                    attach.append(1)
-                elif i > 0 and j > 0:
-                    attach.append(pascal[i - 1][j - 1] + pascal[i - 1][j])
-            pascal.append(attach)
-    return pascal
+    """ Representing the Pascals triangle of n. """
+    # Define matrix
+    matrix = []
+
+    # Empty list if n is less than or equal to 0
+    if n <= 0:
+        return matrix
+
+    # n stands for number of rows so we loop through n
+    for x in range(n):
+        # Define inner list
+        new = []
+        for y in range(x + 1):
+            # Find the combination of x and y
+            result = comb(x, y)
+            # Append result to inner list
+            new.append(result)
+        # Append inner list to matrix
+        matrix.append(new)
+    # Return list of list
+    return matrix
